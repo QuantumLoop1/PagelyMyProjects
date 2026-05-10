@@ -44,6 +44,7 @@ public sealed class TaskRepository : ITaskRepository
 
     public void Delete(TaskItem task)
     {
+        _context.Tasks.Attach(task);
         _context.Tasks.Remove(task);
     }
 

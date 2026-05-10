@@ -131,6 +131,7 @@ public sealed class PageService : IPageService
         await _pageRepository.SaveChangesAsync();
     }
 
+
     public async Task<PageDto> MoveAsync(Guid userId, Guid pageId, MovePageRequestDto request)
     {
         var pages = await _pageRepository.GetAllForUserAsync(userId);
@@ -226,21 +227,35 @@ public sealed class PageService : IPageService
 
     private static HashSet<Guid> GetDescendantIds(Guid parentId, IEnumerable<Page> pages)
     {
-        var lookup = pages.GroupBy(page => page.ParentId).ToDictionary(group => group.Key, group => group.ToList());
+        var safePages = pages
+            .Where(p => p != null && p.Id != Guid.Empty)
+            .ToList();
+
+        var lookup = safePages
+            .Where(p => p.ParentId.HasValue)
+            .GroupBy(p => p.ParentId!.Value)
+            .ToDictionary(
+                g => g.Key,
+                g => g.ToList()
+            );
+
         var descendants = new HashSet<Guid>();
         var stack = new Stack<Guid>();
+
         stack.Push(parentId);
 
         while (stack.Count > 0)
         {
             var current = stack.Pop();
+
             if (!lookup.TryGetValue(current, out var children))
-            {
                 continue;
-            }
 
             foreach (var child in children)
             {
+                if (child == null || child.Id == Guid.Empty)
+                    continue;
+
                 if (descendants.Add(child.Id))
                 {
                     stack.Push(child.Id);
