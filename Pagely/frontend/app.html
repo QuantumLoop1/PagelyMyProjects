@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagely — Страницы</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/api.js"       defer></script>
+    <script src="js/state.js"     defer></script>
+    <script src="js/utils.js"     defer></script>
+    <script src="js/auth.js"      defer></script>
+    <script src="js/sidebar.js"   defer></script>
+    <script src="js/pages.js"     defer></script>
+    <script src="js/editor.js"    defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/calendar.js"  defer></script>
+    <script src="js/main.js"      defer></script>
+</head>
+<body data-page="app">
+    <div class="app-shell">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-top">
+                <button id="sidebar-toggle" class="icon-button" type="button" aria-label="Свернуть сайдбар">☰</button>
+                <div class="sidebar-brand">
+                    <div class="brand-mark small">P</div>
+                    <span>Pagely</span>
+                </div>
+            </div>
+            <div class="sidebar-scroll">
+                <div class="sidebar-links">
+                    <a class="sidebar-link" href="dashboard.html">📊 Dashboard</a>
+                    <a class="sidebar-link" href="calendar.html">📅 Календарь</a>
+                    <a class="sidebar-link active" href="app.html">📝 Страницы</a>
+                </div>
+                <ul id="pages-tree" class="pages-tree"></ul>
+            </div>
+            <div class="sidebar-bottom">
+                <button id="new-page-btn" class="primary-button full-width" type="button">+ Новая страница</button>
+            
+                <button id="logout-button" class="sidebar-logout" type="button">⏻ Выйти</button>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <div class="workspace-topbar">
+                <div class="toolbar-group">
+                    <button id="emoji-button" class="icon-button" type="button" aria-label="Иконка">😀</button>
+                    <div id="emoji-picker" class="emoji-picker hidden"></div>
+                    <label class="color-picker-label">
+                        <span>Обложка</span>
+                        <input id="cover-color-input" type="color" value="#f5f5f5" />
+                    </label>
+                </div>
+                <div class="toolbar-group">
+                    <label class="meta-field">
+                        <span>Статус</span>
+                        <select id="page-status" class="meta-input">
+                            <option value="Todo">Todo</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </label>
+                    <label class="meta-field">
+                        <span>Дата</span>
+                        <input id="page-date" class="meta-input" type="date" />
+                    </label>
+                </div>
+                <div class="toolbar-group">
+                    <button class="format-button" type="button" data-command="bold"><strong>B</strong></button>
+                    <button class="format-button" type="button" data-command="italic"><em>I</em></button>
+                    <button class="format-button" type="button" data-command="insertUnorderedList">• Список</button>
+                    <button id="draft-toggle" class="secondary-button draft-toggle-btn" type="button">✏️ Черновик</button>
+                    <button id="delete-page-button" class="danger-button" type="button">Удалить</button>
+                    <button id="logout-button" class="secondary-button" type="button">Выйти</button>
+                </div>
+            </div>
+
+            <!-- Draft panel -->
+            <div id="draft-panel" class="draft-panel hidden">
+                <div class="draft-panel-header">
+                    <h3 class="draft-panel-title">✏️ Черновик</h3>
+                    <p class="draft-panel-subtitle">Набросайте идею — опубликуйте на Dashboard одним кликом</p>
+                </div>
+                <div class="draft-fields">
+                    <input id="draft-title" type="text" class="draft-input" placeholder="Заголовок черновика" />
+                    <textarea id="draft-content" class="draft-textarea" placeholder="Содержимое заметки..."></textarea>
+                    <div class="draft-meta-row">
+                        <select id="draft-status" class="meta-input">
+                            <option value="Todo">Todo</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
+                        <input id="draft-date" type="date" class="meta-input" />
+                    </div>
+                    <div class="draft-actions">
+                        <button id="draft-clear" class="secondary-button" type="button">Очистить</button>
+                        <button id="draft-publish" class="primary-button" type="button">Опубликовать →</button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="editor-shell">
+                <div id="cover-strip" class="cover-strip"></div>
+                <div class="editor-head">
+                    <button id="page-icon-button" class="page-icon-button" type="button" aria-label="Иконка">🗂️</button>
+                    <div class="editor-meta">
+                        <div id="page-title" class="page-title" contenteditable="true" data-placeholder="Без названия"></div>
+                        <div id="save-status" class="save-status">Готово</div>
+                    </div>
+                </div>
+                <div id="page-content" class="page-content" contenteditable="true" data-placeholder="Начните писать..."></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="new-page-modal" class="modal hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Новая страница</h2>
+                <p>Укажите название и дату выполнения.</p>
+            </div>
+            <form id="new-page-form" class="modal-form">
+                <label>Название<input id="new-page-title" type="text" placeholder="Название" required /></label>
+                <label>Дата<input id="new-page-date" type="date" /></label>
+                <label>Статус
+                    <select id="new-page-status">
+                        <option value="Todo">Todo</option>
+                        <option value="Doing">Doing</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </label>
+                <div class="modal-actions">
+                    <button id="new-page-cancel" class="secondary-button" type="button">Отмена</button>
+                    <button class="primary-button" type="submit">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="context-menu" class="context-menu hidden"></div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagely — Календарь</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/api.js"       defer></script>
+    <script src="js/state.js"     defer></script>
+    <script src="js/utils.js"     defer></script>
+    <script src="js/auth.js"      defer></script>
+    <script src="js/sidebar.js"   defer></script>
+    <script src="js/pages.js"     defer></script>
+    <script src="js/editor.js"    defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/calendar.js"  defer></script>
+    <script src="js/main.js"      defer></script>
+</head>
+
+<body data-page="calendar">
+
+    <div class="app-shell">
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-top">
+                <button id="sidebar-toggle" class="icon-button" type="button">☰</button>
+
+                <div class="sidebar-brand">
+                    <div class="brand-mark small">P</div>
+                    <span>Pagely</span>
+                </div>
+            </div>
+
+            <div class="sidebar-scroll">
+                <div class="sidebar-links">
+                    <a class="sidebar-link" href="dashboard.html">📊 Dashboard</a>
+                    <a class="sidebar-link active" href="calendar.html">📅 Календарь</a>
+                    <a class="sidebar-link" href="app.html">📝 Страницы</a>
+                </div>
+
+                <ul id="pages-tree" class="pages-tree"></ul>
+            </div>
+
+            <div class="sidebar-bottom">
+                <button id="new-page-btn" class="primary-button full-width" type="button">
+                    + Новая страница
+                </button>
+            
+                <button id="logout-button" class="sidebar-logout" type="button">⏻ Выйти</button>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="workspace">
+
+            <div class="workspace-topbar">
+                <h1 class="page-heading">📅 Календарь</h1>
+
+                <button id="logout-button" class="secondary-button" type="button">
+                    Выйти
+                </button>
+            </div>
+
+            <!-- CALENDAR -->
+            <section class="calendar-shell">
+
+                <div class="calendar-controls">
+                    <button id="calendar-prev" class="icon-button">‹</button>
+
+                    <div id="calendar-month" class="calendar-month"></div>
+
+                    <button id="calendar-next" class="icon-button">›</button>
+
+                    <button id="calendar-today" class="secondary-button">
+                        Сегодня
+                    </button>
+                </div>
+
+                <div class="calendar-legend">
+                    <span class="legend-chip status-chip-todo">Todo</span>
+                    <span class="legend-chip status-chip-doing">Doing</span>
+                    <span class="legend-chip status-chip-done">Done</span>
+                    <span class="legend-hint">Нажмите на задачу</span>
+                </div>
+
+                <div class="calendar-grid" id="calendar-grid"></div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- NEW PAGE MODAL -->
+    <div id="new-page-modal" class="modal hidden">
+        <div class="modal-card">
+            <h2>Новая страница</h2>
+
+            <form id="new-page-form">
+                <label>
+                    Название
+                    <input id="new-page-title" type="text" required />
+                </label>
+
+                <label>
+                    Дата
+                    <input id="new-page-date" type="date" />
+                </label>
+
+                <label>
+                    Статус
+                    <select id="new-page-status">
+                        <option value="Todo">Todo</option>
+                        <option value="Doing">Doing</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </label>
+
+                <div class="modal-actions">
+                    <button id="new-page-cancel" type="button" class="secondary-button">
+                        Отмена
+                    </button>
+                    <button type="submit" class="primary-button">
+                        Создать
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ⭐ TASK MODAL (ВОТ ЭТО ТЫ ДОБАВИЛ) -->
+    <div id="calendar-task-modal" class="modal hidden">
+        <div class="modal-card">
+
+            <div class="modal-header">
+                <h2 id="cal-task-title">Задача</h2>
+            </div>
+
+            <label>
+                Название
+                <input id="cal-task-title-input" type="text" />
+            </label>
+
+            <label>
+                Контент
+                <textarea id="cal-task-content"></textarea>
+            </label>
+
+            <label>
+                Статус
+                <select id="cal-task-status">
+                    <option value="Todo">Todo</option>
+                    <option value="Doing">Doing</option>
+                    <option value="Done">Done</option>
+                </select>
+            </label>
+
+            <div class="modal-actions">
+                <button id="cal-task-delete" class="secondary-button" type="button">
+                    Удалить
+                </button>
+
+                <button id="cal-task-save" class="primary-button" type="button">
+                    Сохранить
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CONTEXT MENU -->
+    <div id="context-menu" class="context-menu hidden"></div>
+
+</body>
+</html>

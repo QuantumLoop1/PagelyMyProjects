@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagely - Sign in</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/api.js"       defer></script>
+    <script src="js/state.js"     defer></script>
+    <script src="js/utils.js"     defer></script>
+    <script src="js/auth.js"      defer></script>
+    <script src="js/sidebar.js"   defer></script>
+    <script src="js/pages.js"     defer></script>
+    <script src="js/editor.js"    defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/calendar.js"  defer></script>
+    <script src="js/main.js"      defer></script>
+</head>
+<body data-page="auth">
+    <main class="landing-shell">
+        <section class="landing-hero">
+            <div class="landing-badge">Pagely</div>
+            <h1>Планируйте задачи, заметки и дедлайны в одном месте.</h1>
+            <p>Соберите все идеи, планы и задачи в удобной структуре. Добавляйте дату выполнения, а мы покажем все на доске и в календаре.</p>
+            <div class="landing-actions">
+                <button class="primary-button" type="button" data-auth-tab="register">Регистрация</button>
+                <button class="secondary-button light" type="button" data-auth-tab="login">Войти</button>
+            </div>
+            <div class="landing-highlights">
+                <div class="highlight-card">
+                    <span>📊</span>
+                    <div>
+                        <h3>Dashboard</h3>
+                        <p>Сводка задач по статусу.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <span>📅</span>
+                    <div>
+                        <h3>Календарь</h3>
+                        <p>Визуально планируйте даты.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <span>📝</span>
+                    <div>
+                        <h3>Страницы</h3>
+                        <p>Детальные заметки и описания задач.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="auth-card">
+            <div class="brand-block">
+                <div class="brand-mark">P</div>
+                <div>
+                    <h1>Pagely</h1>
+                    <p>Быстрые заметки и планирование в стиле Notion.</p>
+                </div>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" type="button" data-auth-tab="login">Войти</button>
+                <button class="auth-tab" type="button" data-auth-tab="register">Регистрация</button>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="test@test.com" required />
+                </label>
+                <label>
+                    Пароль
+                    <input type="password" name="password" placeholder="Введите пароль" required />
+                </label>
+                <button type="submit" class="primary-button">Войти</button>
+            </form>
+
+            <form id="register-form" class="auth-form hidden">
+                <label>
+                    Имя
+                    <input type="text" name="name" placeholder="Alex" required />
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="alex@example.com" required />
+                </label>
+                <label>
+                    Пароль
+                    <input type="password" name="password" placeholder="Придумайте пароль" required />
+                </label>
+                <button type="submit" class="primary-button">Создать аккаунт</button>
+            </form>
+
+            <p id="auth-status" class="status-text"></p>
+        </section>
+    </main>
+</body>
+</html>

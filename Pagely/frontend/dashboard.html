@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagely — Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/api.js"       defer></script>
+    <script src="js/state.js"     defer></script>
+    <script src="js/utils.js"     defer></script>
+    <script src="js/auth.js"      defer></script>
+    <script src="js/sidebar.js"   defer></script>
+    <script src="js/pages.js"     defer></script>
+    <script src="js/editor.js"    defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/calendar.js"  defer></script>
+    <script src="js/main.js"      defer></script>
+</head>
+<body data-page="dashboard">
+    <div class="app-shell">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-top">
+                <button id="sidebar-toggle" class="icon-button" type="button" aria-label="Свернуть">☰</button>
+                <div class="sidebar-brand">
+                    <div class="brand-mark small">P</div>
+                    <span>Pagely</span>
+                </div>
+            </div>
+            <div class="sidebar-scroll">
+                <div class="sidebar-links">
+                    <a class="sidebar-link active" href="dashboard.html">📊 Dashboard</a>
+                    <a class="sidebar-link" href="calendar.html">📅 Календарь</a>
+                    <a class="sidebar-link" href="app.html">📝 Страницы</a>
+                </div>
+                <ul id="pages-tree" class="pages-tree"></ul>
+            </div>
+            <div class="sidebar-bottom">
+                <button id="new-page-btn" class="primary-button full-width" type="button">+ Новая страница</button>
+            
+                <button id="logout-button" class="sidebar-logout" type="button">⏻ Выйти</button>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <div class="workspace-topbar">
+                <div class="toolbar-group">
+                    <h1 class="page-heading">📊 Dashboard</h1>
+                    <span class="dashboard-subtitle">Все заметки по статусу</span>
+                </div>
+                <div class="toolbar-group">
+                    <button id="logout-button" class="secondary-button" type="button">Выйти</button>
+                </div>
+            </div>
+            <section class="board-shell">
+                <div id="dashboard-board" class="board-columns"></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="new-page-modal" class="modal hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Новая страница</h2>
+                <p>Укажите название и дату выполнения.</p>
+            </div>
+            <form id="new-page-form" class="modal-form">
+                <label>Название<input id="new-page-title" type="text" placeholder="Название" required /></label>
+                <label>Дата<input id="new-page-date" type="date" /></label>
+                <label>Статус
+                    <select id="new-page-status">
+                        <option value="Todo">Todo</option>
+                        <option value="Doing">Doing</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </label>
+                <div class="modal-actions">
+                    <button id="new-page-cancel" class="secondary-button" type="button">Отмена</button>
+                    <button class="primary-button" type="submit">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="context-menu" class="context-menu hidden"></div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+@Pagely_HostAddress = http://localhost:5115
+
+GET {{Pagely_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
